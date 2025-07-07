@@ -1,6 +1,7 @@
 
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
+| col 3 is      | center | left |
+|---:|:---:|:---|
+|l 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
 
 
@@ -43,6 +44,8 @@ LISTUNORDERED
 - list3
 
 LISTORDERED
+
+
 1. list1
 2. list2
 3. list3
@@ -54,8 +57,9 @@ IMAGEURL
 ![image](https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png)
 
 
-CODEINLINE
-\`code\`
+CODEINLINE `code`
+
+
 
 
 CODEMULTILINE
