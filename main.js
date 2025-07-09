@@ -33,6 +33,7 @@ const loadSkelton =()=> {
 // //optionbar
   append(instructions,gen(div,"optionbar","","optionbar"))
   append(optionbar,gen(span,'render',"Render","button",{onclick:"updateOutput()"}))
+  append(optionbar,gen(span,'copyoutput',"Copy","button",{onclick:"copyToClipboard()"}))
 
 
   append(main, gen(section, "gridRoot", "", "gridRoot"));
@@ -126,6 +127,59 @@ getfile("./exampleMarkdown.md", (data) => {
 });
 
 $$.loadCopyright();
+
+
+//copy rendered output
+
+
+async function copyToClipboard() {
+  try {
+    // Get the HTML element
+    const element = grab(`#preview-code[0]`)
+          //document.getElementById(elementId);
+    if (!element) {
+      console.error('Element not found');
+      return false;
+    }
+
+    // Create a range and select the element's content
+    const range = document.createRange();
+    range.selectNode(element);
+
+    // Clear any existing selection
+    window.getSelection().removeAllRanges();
+    // Add the new range
+    window.getSelection().addRange(range);
+
+    // Copy both HTML and plain text representations
+    const htmlContent = element.innerHTML;
+    const textContent = element.textContent || element.innerText;
+
+    // Create a Blob with HTML content
+    const htmlBlob = new Blob([htmlContent], { type: 'text/html' });
+    const textBlob = new Blob([textContent], { type: 'text/plain' });
+
+    // Write both formats to clipboard
+    const clipboardItem = new ClipboardItem({
+      'text/html': htmlBlob,
+      'text/plain': textBlob
+    });
+
+    await navigator.clipboard.write([clipboardItem]);
+    
+    console.log('Content copied to clipboard');
+    return true;
+  } catch (error) {
+    console.error('Failed to copy:', error);
+    return false;
+  } finally {
+    // Always clear the selection
+    window.getSelection().removeAllRanges();
+  }
+}
+
+
+
 
 
 setTimeout(
